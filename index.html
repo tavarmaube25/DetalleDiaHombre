@@ -71,29 +71,19 @@
         font-family: 'Playball', cursive; 
         font-size: 4rem;
         
-        /* PROPIEDAD CLAVE A AÑADIR/AJUSTAR */
-        -webkit-font-smoothing: antialiased; /* Fuerza una renderización más nítida en Chrome/Edge */
+        /* Mantenemos la antialias (nitidez) */
+        -webkit-font-smoothing: antialiased; 
         
         background: linear-gradient(to right, var(--blanco), var(--celeste));
         -webkit-background-clip: text; 
         background-clip: text; 
         color: transparent;
         
-        /* AJUSTE DE SOMBRA/BRILLO */
-        /* Reducimos el desenfoque de 20px a 5px, para mayor nitidez */
-        text-shadow: 0 0 5px rgba(0, 212, 255, 0.5); 
+        /* ELIMINAMOS O REDUCIMOS A CERO LA SOMBRA BASE para máxima nitidez */
+        text-shadow: none; /* <-- CAMBIO CLAVE: Eliminar la sombra base */
         
         animation: glow 3s ease-in-out infinite alternate;
         }
-/* ... (código posterior) ... */
-
-/* --- Animaciones (Glow) --- */
-/* AJUSTE DE LA ANIMACIÓN 'GLOW' */
-@keyframes glow { 
-    /* Reducimos el desenfoque en la animación para mantener la nitidez */
-    from { text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff; } 
-    to { text-shadow: 0 0 10px #0056b3, 0 0 15px #0056b3; } 
-}
         h2 { font-size: 1.8rem; color: var(--azul); margin-top: 10px; letter-spacing: 3px; text-transform: uppercase; }
         p.dedicatoria { margin-top: 20px; font-size: 1.2rem; color: #cccccc; line-height: 1.6; }
 
@@ -362,4 +352,5 @@
 </body>
 
 </html>
+
 
