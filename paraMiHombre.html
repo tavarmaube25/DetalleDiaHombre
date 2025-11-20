@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Día Mi Junior</title>
+    <style>
+        /* --- Importación de Fuentes --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&family=Playball&display=swap');
+
+        /* --- Variables de Color --- */
+        :root {
+            --negro: #0a0a0a;
+            --negro-suave: #1a1a1a;
+            --azul-oscuro: #003366;
+            --azul: #0056b3;
+            --celeste: #00d4ff;
+            --blanco: #ffffff;
+        }
+
+        /* --- Estilos Generales --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--negro);
+            color: var(--blanco);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            background-image: radial-gradient(circle at top left, var(--negro-suave) 0%, transparent 50%),
+                              radial-gradient(circle at bottom right, var(--azul-oscuro) 0%, transparent 60%);
+            background-attachment: fixed;
+        }
+
+        /* --- Partículas --- */
+        .particles-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 1; }
+        .particle { position: absolute; background-color: var(--celeste); border-radius: 50%; opacity: 0.6; animation: float 10s infinite ease-in-out alternate; }
+        @keyframes float { 0% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-20px) translateX(20px); opacity: 0.8; } 100% { transform: translateY(0) translateX(0); } }
+
+        /* --- MOTO KAWASAKI AZUL --- */
+        .kawasaki-racer {
+            position: fixed; bottom: 10px; left: -300px; width: 250px; z-index: 9998;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6)); animation: carrera 12s linear infinite; pointer-events: none;
+        }
+        @keyframes carrera { 0% { left: -300px; transform: scaleX(1); } 40% { left: 110vw; transform: scaleX(1); } 100% { left: 110vw; transform: scaleX(1); } }
+
+        /* --- Overlay de Bienvenida --- */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--negro), var(--azul-oscuro));
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1s ease;
+        }
+
+        .btn-start {
+            padding: 15px 40px; font-size: 1.5rem; background: transparent;
+            color: var(--celeste); border: 2px solid var(--celeste); border-radius: 50px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
+            box-shadow: 0 0 15px var(--azul); transition: all 0.3s ease; animation: pulse 2s infinite;
+        }
+        .btn-start:hover { background: var(--celeste); color: var(--negro); box-shadow: 0 0 30px var(--celeste); }
+
+        /* --- Contenedor Principal --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center; opacity: 0; transition: opacity 1.5s ease; position: relative; z-index: 2; }
+
+        /* --- Header --- */
+        header { margin-top: 30px; margin-bottom: 50px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        header.visible { opacity: 1; transform: translateY(0); }
+        h1 {
+            font-family: 'Playball', cursive; font-size: 4rem;
+            background: linear-gradient(to right, var(--blanco), var(--celeste));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3); animation: glow 3s ease-in-out infinite alternate;
+        }
+        h2 { font-size: 1.8rem; color: var(--azul); margin-top: 10px; letter-spacing: 3px; text-transform: uppercase; }
+        p.dedicatoria { margin-top: 20px; font-size: 1.2rem; color: #cccccc; line-height: 1.6; }
+
+        /* --- Carrusel (Ajuste de Uniformidad) --- */
+        .carousel-section {
+            margin-top: 80px; margin-bottom: 80px; padding: 20px 0;
+            background-color: var(--negro-suave); border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 86, 179, 0.3); opacity: 0; transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .carousel-section.visible { opacity: 1; transform: translateY(0); }
+        .carousel-section h2 { margin-bottom: 30px; color: var(--celeste); font-size: 2.2rem; text-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+        .carousel-container { position: relative; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .carousel-slide { display: flex; width: 100%; transition: transform 0.5s ease-in-out; }
+        .carousel-slide img { 
+            width: 100%; 
+            height: 450px; /* Altura Fija para Uniformidad */
+            object-fit: cover; /* Recorta y Centra para Cubrir el área */
+            flex-shrink: 0; 
+            border-radius: 8px; 
+        }
+        .carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.5); 
+            color: var(--blanco); border: none; padding: 10px 15px; cursor: pointer; font-size: 1.5rem; 
+            border-radius: 5px; transition: background-color 0.3s ease; z-index: 10;
+        }
+        .carousel-btn:hover { background-color: rgba(0, 0, 0, 0.8); }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+
+        /* --- Sección de GIFs (NUEVO) --- */
+        .gifs-section {
+            margin-bottom: 80px; padding: 40px 20px;
+            background-color: var(--negro-suave); border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 86, 179, 0.3); opacity: 0; transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .gifs-section.visible { opacity: 1; transform: translateY(0); }
+        .gifs-section h2 { margin-bottom: 30px; color: var(--rosa-claro); font-size: 2.2rem; text-shadow: 0 0 10px rgba(255, 153, 204, 0.5); }
+        .gifs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .gif-item img {
+            width: 100%;
+            height: 280px; /* Altura fija para uniformidad del GIF */
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid var(--celeste);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+        .gif-item img:hover { transform: scale(1.03); }
+
+
+        /* --- Animaciones y Footer --- */
+        .rose { position: fixed; top: -50px; z-index: 50; animation: fall linear forwards; }
+        .rose svg { width: 40px; height: 40px; fill: rgba(0, 212, 255, 0.3); stroke: var(--celeste); filter: drop-shadow(0 0 5px var(--azul)); }
+        @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes glow { from { text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff; } to { text-shadow: 0 0 20px #0056b3, 0 0 30px #0056b3; } }
+        .confetti-rose { position: fixed; font-size: 2rem; z-index: 1000; animation: confetti-burst 1.5s ease-out forwards; pointer-events: none; filter: drop-shadow(0 0 5px var(--azul)); }
+        @keyframes confetti-burst { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(var(--x), var(--y)) rotate(var(--deg)) scale(0); opacity: 0; } }
+        footer { margin-top: 60px; padding: 20px; font-size: 0.9rem; color: var(--azul); border-top: 1px solid var(--negro-suave); opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        footer.visible { opacity: 1; transform: translateY(0); }
+        .music-controls { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; }
+        .music-btn {
+            background-color: var(--azul); color: var(--blanco); border: none; border-radius: 50%;
+            width: 50px; height: 50px; font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5); transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .music-btn:hover { background-color: var(--celeste); transform: scale(1.1); }
+
+        /* --- Media Queries (Responsividad) --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; } .kawasaki-racer { width: 180px; }
+            .carousel-slide img { height: 300px; }
+            .gifs-grid { grid-template-columns: 1fr; } /* Los GIFs se apilan en móvil */
+            .gif-item img { height: auto; max-height: 350px; } /* Altura más flexible en móvil */
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; } .btn-start { padding: 10px 20px; font-size: 1.2rem; }
+            .carousel-slide img { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="/img/Moto Kawasaki-azul.png" alt="Moto Kawasaki Azul" class="kawasaki-racer">
+
+    <div class="particles-container"></div>
+
+    <audio id="bg-music" loop>
+        <source src="music/Adiccion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div id="overlay">
+        <h2 style="color:var(--blanco); margin-bottom:20px; animation: pulse 2s infinite;">¡Una Sorpresa Para Ti, Corazón!</h2>
+        <button class="btn-start" onclick="startExperience()">Abrir Regalo</button>
+    </div>
+
+    <div class="container" id="main-content">
+        <header class="hidden-on-load">
+            <h1>Feliz Día</h1>
+            <h2>Al mejor hombre del mundo</h2>
+            <h3 style="color: var(--blanco); font-weight:300; margin-top:10px;">Para: <strong>Junior</strong></h3>
+            <p class="dedicatoria">
+                "Eres la fuerza, la pasión y la calma. Hoy celebramos quien eres y todo lo que representas.<br>
+                Disfruta de tu día especial y que cada momento esté lleno de alegría."
+            </p>
+        </header>
+
+        <div class="carousel-section hidden-on-load">
+            <h2>Nuestros Momentos Especiales</h2>
+            <div class="carousel-container">
+                <div class="carousel-slide" id="carousel-slide">
+                    <img src="/img/img1.jpeg" alt="Momento 1">
+                    <img src="/img/img4.jpeg" alt="Momento 2">
+                    <img src="/img/img3.jpeg" alt="Momento 3">
+                </div>
+                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="gifs-section hidden-on-load">
+            <h2>Somos esos</h2>
+            <div class="gifs-grid">
+                <div class="gif-item">
+                    <img src="/gifs/gif1.gif" alt="Gif de Amor 1">
+                </div>
+                <div class="gif-item">
+                    <img src="/gifs/gif2.gif" alt="Gif de Risa 2">
+                </div>
+                <div class="gif-item">
+                    <img src="/gifs/gif3.gif" alt="Gif de Celebración 3">
+                </div>
+            </div>
+        </div>
+
+        <footer class="hidden-on-load">
+            <p>Con mucho cariño &hearts;</p>
+        </footer>
+    </div>
+
+    <div class="music-controls" id="music-controls">
+        <button class="music-btn" id="play-pause-btn" onclick="togglePlayPause()">&#10074;&#10074;</button>
+    </div>
+
+    <script>
+        const audioPlayer = document.getElementById('bg-music');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        let isPlaying = false;
+
+        // --- INICIO DE LA EXPERIENCIA ---
+        function startExperience() {
+            // 1. Iniciar Audio Inmediatamente
+            audioPlayer.volume = 0.5;
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                playPauseBtn.innerHTML = '&#10074;&#10074;';
+            }).catch(error => {
+                console.log("Error al reproducir audio:", error);
+                // Si falla la reproducción, no bloqueamos la experiencia
+            });
+
+            // 2. Ocultar Overlay y mostrar controles
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.getElementById('music-controls').style.display = 'block';
+            }, 1000);
+
+            // 3. Mostrar contenido y efectos
+            document.getElementById('main-content').style.opacity = '1';
+            startRoseRain();
+            createConfettiRoses(30);
+            createParticles(20);
+            setupScrollAnimations();
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '&#9658;';
+                isPlaying = false;
+            } else {
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '&#10074;&#10074;';
+                isPlaying = true;
+            }
+        }
+
+        // --- Efectos Visuales (Rosas, Confetti, etc.) ---
+        function startRoseRain() { setInterval(createRose, 600); }
+        function createRose() {
+            const rose = document.createElement('div');
+            rose.classList.add('rose');
+            rose.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2L12 22 M12 8 C14 8 16 6 16 4 C16 2 14 0 12 2 C10 0 8 2 8 4 C8 6 10 8 12 8 Z M12 16 C15 16 18 14 18 11 C18 8 15 6 12 8 C9 6 6 8 6 11 C6 14 9 16 12 16 Z"/></svg>`;
+            rose.style.left = Math.random() * 100 + "vw";
+            rose.style.animationDuration = Math.random() * 4 + 4 + "s";
+            rose.style.transform = `scale(${Math.random() * 0.8 + 0.5})`;
+            document.body.appendChild(rose);
+            setTimeout(() => { rose.remove(); }, parseFloat(rose.style.animationDuration) * 1000);
+        }
+
+        function createConfettiRoses(count) {
+            // ... (Función de Confetti) ...
+            for (let i = 0; i < count; i++) {
+                const rose = document.createElement('div');
+                rose.classList.add('confetti-rose');
+                rose.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2L12 22 M12 8 C14 8 16 6 16 4 C16 2 14 0 12 2 C10 0 8 2 8 4 C8 6 10 8 12 8 Z M12 16 C15 16 18 14 18 11 C18 8 15 6 12 8 C9 6 6 8 6 11 C6 14 9 16 12 16 Z"/></svg>`;
+                document.body.appendChild(rose);
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 50;
+                rose.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+                rose.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+                rose.style.setProperty('--deg', `${Math.random() * 360}deg`);
+                rose.style.left = `calc(50vw + ${Math.cos(angle) * distance / 2}px)`;
+                rose.style.top = `calc(50vh + ${Math.sin(angle) * distance / 2}px)`;
+                setTimeout(() => { rose.remove(); }, 1500);
+            }
+        }
+
+        function createParticles(count) {
+            const container = document.querySelector('.particles-container');
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div'); p.classList.add('particle');
+                const size = Math.random() * 10 + 5;
+                p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-duration:${Math.random()*5+5}s;animation-delay:${Math.random()*-10}s`;
+                container.appendChild(p);
+            }
+        }
+
+        // --- Carrusel ---
+        let slideIndex = 0;
+        function moveSlide(n) {
+            const slides = document.getElementById('carousel-slide').children;
+            slideIndex = (slideIndex + n + slides.length) % slides.length;
+            document.getElementById('carousel-slide').style.transform = `translateX(${-slideIndex * 100}%)`;
+        }
+        let autoSlide = setInterval(() => moveSlide(1), 5000);
+        const cContainer = document.querySelector('.carousel-container');
+        cContainer.addEventListener('mouseover', () => clearInterval(autoSlide));
+        cContainer.addEventListener('mouseleave', () => autoSlide = setInterval(() => moveSlide(1), 5000));
+
+        // --- Observador para Animaciones de Scroll ---
+        function setupScrollAnimations() {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if(e.isIntersecting) { 
+                        e.target.classList.add('visible'); 
+                        obs.unobserve(e.target); 
+                    }
+                });
+            }, { threshold: 0.1 });
+            // Se añaden todas las secciones animadas
+            document.querySelectorAll('.hidden-on-load').forEach(el => obs.observe(el));
+        }
+    </script>
+</body>
+</html>
