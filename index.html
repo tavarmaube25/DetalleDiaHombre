@@ -147,7 +147,7 @@
         .rose svg { width: 40px; height: 40px; fill: rgba(0, 212, 255, 0.3); stroke: var(--celeste); filter: drop-shadow(0 0 5px var(--azul)); }
         @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        @keyframes glow { from { text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff; } to { text-shadow: 0 0 20px #0056b3, 0 0 30px #0056b3; } }
+        @keyframes glow { from { text-shadow: 0 0 1px #00d4ff, 0 0 2px #00d4ff; } to { text-shadow: 0 0 2px #0056b3, 0 0 4px #0056b3; } }
         .confetti-rose { position: fixed; font-size: 2rem; z-index: 1000; animation: confetti-burst 1.5s ease-out forwards; pointer-events: none; filter: drop-shadow(0 0 5px var(--azul)); }
         @keyframes confetti-burst { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(var(--x), var(--y)) rotate(var(--deg)) scale(0); opacity: 0; } }
         footer { margin-top: 60px; padding: 20px; font-size: 0.9rem; color: var(--azul); border-top: 1px solid var(--negro-suave); opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
@@ -352,5 +352,6 @@
 </body>
 
 </html>
+
 
 
